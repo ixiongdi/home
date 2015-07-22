@@ -1,15 +1,5 @@
-FROM    centos:centos6
-
-# Enable EPEL for Node.js
-RUN     rpm -Uvh http://download.fedoraproject.org/pub/epel/6/i386/epel-release-6-8.noarch.rpm
-# Install Node.js and npm
-RUN     yum install -y npm
-
-# Bundle app source
-COPY . /src
-# Install app dependencies
-RUN cd /src; npm install
-
-EXPOSE  8080
-CMD ["node", "/src/index.js"]
-
+FROM ubuntu:14.04
+RUN sudo apt-get install curl openssh-server ca-certificates postfix
+RUN curl https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh | sudo bash
+RUN sudo apt-get install gitlab-ce
+RUN sudo gitlab-ctl reconfigure
